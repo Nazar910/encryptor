@@ -1,6 +1,7 @@
 const React = require('react');
 const languages = require('./languages.js');
 const ciphers = require('./ciphers');
+const utf8 = require('utf8');
 
 const components = require('./components');
 
@@ -32,9 +33,16 @@ class App extends React.Component {
     }
 
     encrypt() {
-        const cipher = new ciphers[this.state.cryptType](
-            this.state.message, this.state.key, this.state.lang);
-        const { message, error, additional } = cipher.encrypt();
+        const cryptType = this.state.cryptType;
+
+        const message = utf8.encode(this.state.message);
+        const key = utf8.encode(this.state.key);
+        const lang = utf8.encode(this.state.lang);
+        console.log([message, key, lang]);
+
+        const cipher = new ciphers[cryptType](message, key, lang);
+
+        const { message: encryptedMessage, error, additional } = cipher.encrypt();
 
         let state;
         if (error) {
@@ -44,7 +52,7 @@ class App extends React.Component {
         } else {
             state = {
                 error: '',
-                message,
+                message: encryptedMessage,
                 additional
             }
         }
@@ -52,10 +60,15 @@ class App extends React.Component {
     }
 
     decrypt() {
-        const cipher = new ciphers[this.state.cryptType](
-            this.state.message, this.state.key, this.state.lang);
+        const cryptType = this.state.cryptType;
 
-        const { message, error, additional } = cipher.decrypt();
+        const message = this.state.message;
+        const key = utf8.encode(this.state.key);
+        const lang = utf8.encode(this.state.lang);
+
+        const cipher = new ciphers[cryptType](message, key, lang);
+
+        const { message: decryptedMessage, error, additional } = cipher.decrypt();
 
         let state;
         if (error) {
@@ -65,7 +78,7 @@ class App extends React.Component {
         } else {
             state = {
                 error: '',
-                message,
+                message: utf8.decode(decryptedMessage),
                 additional
             }
         }
