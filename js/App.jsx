@@ -23,6 +23,7 @@ class App extends React.Component {
         this.onMessageChange = this.onMessageChange.bind(this);
         this.onCipherChange = this.onCipherChange.bind(this);
         this.onKeyChange = this.onKeyChange.bind(this);
+        this.onMessageFileChange = this.onMessageFileChange.bind(this);
 
     }
 
@@ -38,7 +39,6 @@ class App extends React.Component {
         const message = utf8.encode(this.state.message);
         const key = utf8.encode(this.state.key);
         const lang = utf8.encode(this.state.lang);
-        console.log([message, key, lang]);
 
         const cipher = new ciphers[cryptType](message, key, lang);
 
@@ -97,13 +97,25 @@ class App extends React.Component {
         },() => this.render());
     }
 
-    copyToClip() {
-        document.querySelector('#input').select();
-        document.execCommand('copy');
+    fileChange(event, callback) {
+        const file = event.target.files[0];
+        const fr = new FileReader();
+
+        fr.onload = () => {
+            callback(fr.result.slice(0, -1));
+        };
+        fr.readAsText(file);
+    }
+
+    onMessageFileChange(event) {
+        this.fileChange(event, (message) => this.setState({ message }))
     }
 
     render() {
-        let cipher = components(this.onKeyChange, this.state.additional)[this.state.cryptType];
+        let cipher = components(
+            this.onKeyChange,
+            this.state.additional,
+            this.fileChange)[this.state.cryptType];
 
         return (
             <div className="form-group">
@@ -114,6 +126,7 @@ class App extends React.Component {
                     placeholder="Type in your message"
                     rows="5">
                 </textarea>
+                <input type="file" id="messageFile" onChange={this.onMessageFileChange} accept="text/txt"/>
 
                 {cipher}
 
