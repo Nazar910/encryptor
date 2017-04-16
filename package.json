@@ -22,6 +22,9 @@
     "webpack": "^2.2.1"
   },
   "dependencies": {
+    "binstring": "^0.2.1",
+    "node-forge": "^0.7.1",
+    "random-js": "^1.0.8",
     "react": "^15.5.3",
     "react-dom": "^15.5.3"
   }
