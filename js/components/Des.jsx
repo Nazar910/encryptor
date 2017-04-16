@@ -4,6 +4,13 @@ class Des extends React.Component {
 
     constructor(props) {
         super(props);
+
+        this.onKeyChange = this.onKeyChange.bind(this)
+    }
+
+    onKeyChange(event) {
+        const key = event.target.value;
+        this.props.onKeyChange(key)
     }
 
     render() {
@@ -11,7 +18,7 @@ class Des extends React.Component {
             <div>
                 <textarea
                     className="form-control"
-                    id="key" name="key"
+                    onChange={this.onKeyChange} name="key"
                     placeholder="Type in your key"
                     rows="5">
                 </textarea>

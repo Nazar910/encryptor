@@ -14,58 +14,59 @@ class App extends React.Component {
             message: '',
             cryptType: 'stirl',
             error: '',
-            cipher: {}
+            key: ''
         };
 
         this.encrypt = this.encrypt.bind(this);
         this.decrypt = this.decrypt.bind(this);
         this.onMessageChange = this.onMessageChange.bind(this);
         this.onCipherChange = this.onCipherChange.bind(this);
+        this.onKeyChange = this.onKeyChange.bind(this);
 
+    }
+
+    onKeyChange(newKey) {
+        this.setState({
+            key: newKey
+        })
     }
 
     encrypt() {
-        const key = document.getElementById('key').value;
-
         const cipher = new ciphers[this.state.cryptType](
-                                this.state.message, key, this.state.lang);
-        const message = cipher.encrypt();
+            this.state.message, this.state.key, this.state.lang);
+        const { message, error, additional } = cipher.encrypt();
 
         let state;
-        if (message.error) {
+        if (error) {
             state = {
-                error: message.error
+                error
             }
         } else {
             state = {
                 error: '',
-                message
+                message,
+                additional
             }
         }
-        state.cipher = cipher;
-        this.setState(state)
+        this.setState(state);
     }
 
     decrypt() {
-        const key = document.getElementById('key').value;
+        const cipher = new ciphers[this.state.cryptType](
+            this.state.message, this.state.key, this.state.lang);
 
-        let cipher = new ciphers[this.state.cryptType](
-            this.state.message, key, this.state.lang);
-        if (this.state.cryptType === 'des') {
-            cipher = this.state.cipher;
-        }
-
-        const message = cipher.decrypt();
+        const { message, error, additional } = cipher.decrypt();
 
         let state;
-        if (message.error) {
+        if (error) {
             state = {
-                error: message.error
+                error
             }
         } else {
             state = {
                 error: '',
-                message
+                message,
+                additional
             }
         }
         this.setState(state)
@@ -83,8 +84,13 @@ class App extends React.Component {
         },() => this.render());
     }
 
+    copyToClip() {
+        document.querySelector('#input').select();
+        document.execCommand('copy');
+    }
+
     render() {
-        let cipher = components[this.state.cryptType];
+        let cipher = components(this.onKeyChange, this.state.additional)[this.state.cryptType];
 
         return (
             <div className="form-group">

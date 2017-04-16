@@ -80,7 +80,9 @@ class Stirl extends Cipher {
             i = step(i);
         }
 
-        return result;
+        return {
+            message: result
+        }
     }
 
     encrypt() {

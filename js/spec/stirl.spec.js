@@ -18,7 +18,7 @@ describe('Stirl', () => {
             const key = keys['poorGhost'];
             const cipher = new Stirl(message, key, english);
 
-            const actual = cipher.encrypt();
+            const actual = cipher.encrypt().message;
 
             expect(actual).to.equal('101013311111');
         });
@@ -28,7 +28,7 @@ describe('Stirl', () => {
             const key = keys['poorGhost'];
             const cipher = new Stirl(message, key, english);
 
-            const actual = cipher.decrypt();
+            const actual = cipher.decrypt().message;
 
             expect(actual).to.equal('Fly');
         });

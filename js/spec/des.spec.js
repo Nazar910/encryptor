@@ -4,16 +4,27 @@ const Des = require('../lib/des');
 describe('Des', () => {
 
     describe('when key is qwertyasdfgzxcvb', () => {
+        let encrypted;
+        let decrypted;
+        let iv = require('../languages')['en'];
 
-        it('should encrypt and decrypt', () => {
-            const message = 'Hello';
-            const key = 'qwertyasdfgzxcvb';
-            const cipher = new Des(message, key);
+        const message = 'Hello';
+        const key = 'qwertyasdfgzxcvb';
 
-            const encrypted = cipher.encrypt();
-            const decrypted = cipher.decrypt();
+        it('should encrypt', () => {
+            const cipher = new Des(message, key, iv);
 
-            expect(decrypted).to.equal(message);
+            encrypted = cipher.encrypt().message;
+            iv = cipher.iv;
+            expect(encrypted).to.equal('jÞôÐçøý°');
+        });
+
+        it('should decrypt', () => {
+            const cipher = new Des(encrypted, key, iv);
+
+            decrypted = cipher.decrypt().message;
+            expect(iv).to.equal(cipher.iv);
+            expect(decrypted).to.equal('Hello');
         });
 
     });
