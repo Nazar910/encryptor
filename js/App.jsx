@@ -40,7 +40,7 @@ class App extends React.Component {
         const key = utf8.encode(this.state.key);
         const lang = utf8.encode(this.state.lang);
 
-        const cipher = new ciphers[cryptType](message, key, lang);
+        const cipher = new ciphers[cryptType](message, key, lang, this.state.cryptType);
 
         const { message: encryptedMessage, error, additional } = cipher.encrypt();
 
@@ -66,7 +66,7 @@ class App extends React.Component {
         const key = utf8.encode(this.state.key);
         const lang = utf8.encode(this.state.lang);
 
-        const cipher = new ciphers[cryptType](message, key, lang);
+        const cipher = new ciphers[cryptType](message, key, lang, this.state.cryptType);
 
         const { message: decryptedMessage, error, additional } = cipher.decrypt();
 
@@ -153,7 +153,8 @@ class App extends React.Component {
 
                 <select style={{float: 'right'}} onChange={this.onCipherChange}>
                     <option>Stirl</option>
-                    <option>Des</option>
+                    <option>DES-CBC</option>
+                    <option>DES-ECB</option>
                 </select>
                 <br/>{this.state.error}
             </div>
