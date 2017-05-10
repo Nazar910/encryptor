@@ -1,4 +1,5 @@
 module.exports = {
     'stirl': require('./lib/stirl'),
-    'des': require('./lib/des')
+    'des-cbc': require('./lib/des'),
+    'des-ecb': require('./lib/des')
 };
