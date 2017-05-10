@@ -1,6 +1,6 @@
 const forge = require('node-forge');
 
-const Cipher = require('./cipher')
+const Cipher = require('./cipher');
 
 class Des extends Cipher{
 
