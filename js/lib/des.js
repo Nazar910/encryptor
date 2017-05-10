@@ -1,6 +1,6 @@
 const forge = require('node-forge');
 
-const Cipher = require('./cipher')
+const Cipher = require('./cipher');
 
 class Des extends Cipher{
 
@@ -27,6 +27,7 @@ class Des extends Cipher{
     }
 
     decrypt() {
+
         const decipher = forge.cipher.createDecipher(this.desType, this.key);
 
         decipher.start({iv: this.iv});
