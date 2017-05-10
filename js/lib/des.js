@@ -4,14 +4,14 @@ const Cipher = require('./cipher');
 
 class Des extends Cipher{
 
-    constructor(message, key, alphabet, type) {
+    constructor(message, key, alphabet, desType) {
         super(message, key, alphabet);
         this.iv = alphabet || forge.random.getBytesSync(16);
-        this.type = type;
+        this.desType = desType || 'DES-CBC';
     }
 
     encrypt() {
-        const cipher = forge.cipher.createCipher(this.type, this.key);
+        const cipher = forge.cipher.createCipher(this.desType, this.key);
 
         cipher.start({iv: this.iv});
         cipher.update(forge.util.createBuffer(this.message));
@@ -27,7 +27,8 @@ class Des extends Cipher{
     }
 
     decrypt() {
-        const decipher = forge.cipher.createDecipher(this.type, this.key);
+
+        const decipher = forge.cipher.createDecipher(this.desType, this.key);
 
         decipher.start({iv: this.iv});
         decipher.update(forge.util.createBuffer(this.message));
