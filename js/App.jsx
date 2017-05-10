@@ -145,12 +145,6 @@ class App extends React.Component {
                     Decrypt
                 </button>
 
-                <select style={{float: 'right'}} onChange={this.onLangChange}>
-                    <option>en</option>
-                    <option>ru</option>
-                    <option>ua</option>
-                </select>
-
                 <select style={{float: 'right'}} onChange={this.onCipherChange}>
                     <option>Stirl</option>
                     <option>DES-CBC</option>
