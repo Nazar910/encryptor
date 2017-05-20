@@ -40,7 +40,7 @@ class App extends React.Component {
         const key = utf8.encode(this.state.key);
         const lang = utf8.encode(this.state.lang);
 
-        const cipher = new ciphers[cryptType](message, key, lang, cryptType)
+        const cipher = new ciphers[cryptType](message, key, lang, cryptType);
 
         const { message: encryptedMessage, error, additional } = cipher.encrypt();
 
