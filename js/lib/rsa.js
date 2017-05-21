@@ -6,10 +6,12 @@ class Rsa {
         this.key = new NodeRSA(key);
     }
 
+    //expects key to be public
     encrypt() {
         return this.key.encrypt(this.message, 'base64');
     }
 
+    //expects ket to be private
     decrypt() {
         return this.key.decrypt(this.message, 'utf8');
     }
