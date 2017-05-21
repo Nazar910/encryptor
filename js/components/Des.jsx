@@ -27,7 +27,7 @@ class Des extends React.Component {
                 <textarea
                     className="form-control" ref="key"
                     onChange={this.onKeyChange} name="key"
-                    placeholder="Type in your key"
+                    placeholder="Paste in your key"
                     rows="5">
                 </textarea>
                 <input type="file" id="keyFile" onChange={this.onKeyFileChange} accept="text/txt"/>
