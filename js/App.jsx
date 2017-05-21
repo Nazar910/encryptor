@@ -42,6 +42,7 @@ class App extends React.Component {
 
         const cipher = new ciphers[cryptType](message, key, lang, cryptType);
 
+        debugger;
         const { message: encryptedMessage, error, additional } = cipher.encrypt();
 
         let state;
@@ -149,6 +150,7 @@ class App extends React.Component {
                     <option>Stirl</option>
                     <option>DES-CBC</option>
                     <option>DES-ECB</option>
+                    <option>RSA</option>
                 </select>
                 <br/>{this.state.error}
             </div>

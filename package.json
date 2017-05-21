@@ -28,9 +28,11 @@
     "keypair": "^1.0.1",
     "node-forge": "^0.7.1",
     "node-rsa": "^0.4.2",
+    "q": "^1.5.0",
     "random-js": "^1.0.8",
     "react": "^15.5.3",
     "react-dom": "^15.5.3",
+    "react-file-download": "^0.3.4",
     "utf8": "^2.1.2"
   }
 }

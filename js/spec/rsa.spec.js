@@ -10,11 +10,11 @@ describe('rsa', () => {
         const original = 'Hello';
         const encryptor = new Rsa(original, pair.public);
 
-        const encrypted = encryptor.encrypt();
+        const { message: encrypted } = encryptor.encrypt();
 
         const decryptor = new Rsa(encrypted, pair.private);
 
-        const decrypted = decryptor.decrypt();
+        const { message: decrypted } = decryptor.decrypt();
 
         expect(decrypted).to.equal(original);
 

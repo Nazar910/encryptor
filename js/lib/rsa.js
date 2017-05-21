@@ -8,12 +8,18 @@ class Rsa {
 
     //expects key to be public
     encrypt() {
-        return this.key.encrypt(this.message, 'base64');
+        const message = this.key.encrypt(this.message, 'base64');
+        return {
+            message
+        };
     }
 
     //expects ket to be private
     decrypt() {
-        return this.key.decrypt(this.message, 'utf8');
+        const message = this.key.decrypt(this.message, 'utf8');
+        return {
+            message
+        };
     }
 }
 
