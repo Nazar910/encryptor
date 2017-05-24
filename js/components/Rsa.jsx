@@ -11,8 +11,14 @@ class Rsa extends React.Component {
     constructor(props) {
         super(props);
 
+        this.state = {
+            byteCount: 2048
+        };
+
         this.onKeyChange = this.onKeyChange.bind(this);
         this.onFileChange = this.onFileChange.bind(this);
+        this.generateKeyPair = this.generateKeyPair.bind(this);
+        this.onByteCountChange = this.onByteCountChange.bind(this);
     }
 
     onKeyChange(key) {
@@ -20,8 +26,10 @@ class Rsa extends React.Component {
     }
 
     generateKeyPair() {
+        const that = this;
+
         function generateKeys() {
-            return keypair();
+            return keypair(that.state.byteCount);
         }
 
         Q.fcall(generateKeys)
@@ -35,11 +43,22 @@ class Rsa extends React.Component {
         this.props.onFileChange(...args);
     }
 
+    onByteCountChange({ target }) {
+        const { value: byteCount } = target;
+        this.setState({ byteCount });
+    }
+
     render() {
         return (
             <div>
                 <Des onKeyChange={this.onKeyChange} onFileChange={this.onFileChange}/>
                 <button onClick={this.generateKeyPair}>Generate key pair</button>
+                <select onChange={this.onByteCountChange} value={this.state.byteCount}>
+                    <option>512</option>
+                    <option>1024</option>
+                    <option>2048</option>
+                    <option>4096</option>
+                </select>
             </div>
         );
     }
