@@ -12,7 +12,8 @@ class Rsa extends React.Component {
         super(props);
 
         this.state = {
-            byteCount: 2048
+            byteCount: 2048,
+            loading: false
         };
 
         this.onKeyChange = this.onKeyChange.bind(this);
@@ -28,12 +29,15 @@ class Rsa extends React.Component {
     generateKeyPair() {
         const that = this;
 
+        that.setState({ loading: true });
+
         function generateKeys() {
             return keypair(that.state.byteCount);
         }
 
         Q.fcall(generateKeys)
             .then(data => {
+                that.setState({ loading: false });
                 fileDownload(data.public, 'public-key.pub');
                 fileDownload(data.private, 'private-key');
             });
@@ -59,6 +63,7 @@ class Rsa extends React.Component {
                     <option>2048</option>
                     <option>4096</option>
                 </select>
+                { this.state.loading ? <h3>Generating...</h3> : '' }
             </div>
         );
     }
